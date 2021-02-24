@@ -67,8 +67,10 @@ class Cart {
     operation.call(this, id);
     this.renderCart();
   }
-  addProduct(id) {
+  async addProduct(id) {
     this.cart[id] = (this.cart[id] || 0) + 1;
+    const currProduct = await this.productService.getProductById(id);
+    currProduct.count--;
     this.saveCart();
     this.updateBadge();
   }

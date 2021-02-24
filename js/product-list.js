@@ -23,7 +23,9 @@ class ProductList {
                         alt="${product.title}">
                     <div class="card-body d-flex flex-column">
                       <h4 class="card-title">${product.title}</h4>
-                      <p class="card-text flex-fill">${product.description}</p>
+                      <p class="card-text flex-fill">${product.description}
+                      <br>Left: ${product.count}
+                      </p>
                       <div class="d-flex justify-content-around">
                         <button class="btn btn-info" data-bs-toggle="modal"
                           data-bs-target="#productInfoModal" data-id="${product.id}">Info
@@ -81,10 +83,12 @@ class ProductList {
     btnBuy.innerText = `${product.price} - Buy`;
     btnBuy.dataset.id = id;
   }
-  handleProductBuyClick(event) {
+  async handleProductBuyClick(event) {
     const button = event.target;
     const id = button.dataset.id;
-    this.cart.addProduct(id);
+    await this.cart.addProduct(id);
+    await this.renderProducts();
+    this.addEventListeners();
     window.showAlert('Product added to cart');
   }
 }
